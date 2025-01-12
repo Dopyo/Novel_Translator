@@ -1,5 +1,6 @@
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import event
 from flask_cors import CORS
 from routes import register_routes
 from models import db
@@ -15,6 +16,12 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
+
+    def enable_foreign_keys(db_connection, _):
+        db_connection.execute("PRAGMA foreign_keys=ON")
+
+    with app.app_context():
+        event.listen(db.engine, "connect", enable_foreign_keys)
 
     register_routes(app)
 
