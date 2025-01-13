@@ -1,6 +1,6 @@
-# Flask_React
+# Novel Translator
 
-Personal Project to make it easier to compare machine translation quality when translating novels
+Personal Project to make it easier to compare machine translation quality when translating novels. Do not serve over the internet if you expect someone else to use your credits for other purposes.
 
 ## Requirements
 
@@ -14,6 +14,8 @@ VITE_MODEL_1_API_KEY=your-key
 VITE_MODEL_2_NAME=Qwen/Qwen2.5-72B-Instruct
 VITE_MODEL_2_ENDPOINT=https://api.deepinfra.com/v1/openai
 VITE_MODEL_2_API_KEY=your-key
+
+(you can add more by incrementing VITE_MODEL_3...)
 ```
 
 Run these commands to start the app
