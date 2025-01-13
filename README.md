@@ -1,2 +1,42 @@
 # Flask_React
- Personal Project
+
+Personal Project to make it easier to compare machine translation quality when translating novels
+
+## Requirements
+
+.env file (placed in backend folder)
+
+```
+VITE_MODEL_1_NAME=gpt-4o (model name)
+VITE_MODEL_1_ENDPOINT=https://api.openai.com/v1 (do not include /chat/completions)
+VITE_MODEL_1_API_KEY=your-key
+
+VITE_MODEL_2_NAME=Qwen/Qwen2.5-72B-Instruct
+VITE_MODEL_2_ENDPOINT=https://api.deepinfra.com/v1/openai
+VITE_MODEL_2_API_KEY=your-key
+```
+
+Run these commands to start the app
+
+```
+cd ./frontend
+npm run build
+cd ../backend
+flask run
+```
+
+The page will be served on http://127.0.0.1:5000/
+
+## Todo
+
+1. port 5000 is currently hardcoded in app.jsx (needs to be changed)
+2. view token count and api cost
+3. menu to configure api settings (max token count, logprobs, etc.)
+4. delete chapter action icon
+5. constant system prompt per novel
+6. the entire code is in app.jsx (needs to be changed)
+
+## Long term goal
+
+1. RAG for more consistent named entity
+2. Fine tunning
