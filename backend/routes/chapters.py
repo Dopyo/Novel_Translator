@@ -19,6 +19,7 @@ def create_chapter():
     data = request.get_json()
     chapter_number = data.get("chapter_number")
     novel_id = data.get("novel_id")
+    system_prompt = data.get("system_prompt")
 
     # Validate required fields
     if not chapter_number or not novel_id:
@@ -30,7 +31,11 @@ def create_chapter():
         return jsonify({"error": "Novel not found"}), 404
 
     # Create the chapter
-    chapter = Chapter(chapter_number=chapter_number, novel_id=novel_id)
+    chapter = Chapter(
+        chapter_number=chapter_number,
+        novel_id=novel_id,
+        system_prompt=system_prompt,
+    )
     db.session.add(chapter)
     db.session.commit()
 

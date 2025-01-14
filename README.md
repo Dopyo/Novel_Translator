@@ -33,10 +33,9 @@ The page will be served on http://127.0.0.1:5000/
 
 1. port 5000 is currently hardcoded in app.jsx (needs to be changed)
 2. view token count and api cost
-3. menu to configure api settings (max token count, logprobs, etc.)
-4. delete chapter action icon
-5. constant system prompt per novel
-6. the entire code is in app.jsx (needs to be changed)
+3. menu to configure api settings for each model (max token count, logprobs, etc.)
+4. the entire code is in app.jsx (needs to be changed)
+5. prepare jsonl file for evaluation with openai's Evaluation Platform
 
 ## Long term goal
 
