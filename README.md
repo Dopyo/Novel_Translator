@@ -2,6 +2,10 @@
 
 Personal Project to make it easier to compare machine translation quality when translating novels. Do not serve over the internet if you expect someone else to use your credits for other purposes.
 
+## Demo
+
+[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/IRmymS2kFzM)
+
 ## Requirements
 
 .env file (placed in backend folder)
