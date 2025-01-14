@@ -25,36 +25,40 @@ def generate_completion():
         chapter_id = data.get("chapter_id")
         model_id = data.get("model_id")
 
-        print(f"Request data: {data}")  # Debugging line
-
         if not prompt or not chapter_id or not model_id:
             return (
                 jsonify({"error": "Prompt, chapter_id, and model_id are required"}),
                 400,
             )
 
+        # Fetch the chapter to get the system prompt
+        chapter = Chapter.query.get(chapter_id)
+        if not chapter:
+            return jsonify({"error": "Chapter not found"}), 404
+
         selected_model = next(
             (model for model in models if model["name"] == model_id), None
         )
         if not selected_model:
-            print(f"Invalid model_id: {model_id}")  # Debugging line
             return jsonify({"error": f"Invalid model_id: {model_id}"}), 400
-
-        print(f"Selected model: {selected_model}")  # Debugging line
 
         client = OpenAI(
             api_key=selected_model["api_key"],
             base_url=selected_model["endpoint"],
         )
 
+        # Include the system prompt in the messages
+        messages = []
+        if chapter.system_prompt:
+            messages.append({"role": "system", "content": chapter.system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
         response = client.chat.completions.create(
             model=selected_model["name"],
-            messages=[
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=150,
+            messages=messages,  # Use the updated messages array
+            max_tokens=16384,
             temperature=0.7,
-            stream=True,  # Enable streaming
+            stream=True,
         )
 
         # Stream the response to the frontend
@@ -66,20 +70,12 @@ def generate_completion():
                     full_response += content
                     yield f"data: {json.dumps({'content': content})}\n\n"
 
-            new_pair = CompletionPair(
-                name="Temporary Pair",
-                request_json={"key": "value"},
-                response_json={"result": "success"},
-                chapter_id=1,
-            )
-            db.session.add(new_pair)
-            db.session.flush()
-            would_be_id = new_pair.id
-            db.session.rollback()
-
+            # Save the completion pair to the database
             completion_pair = CompletionPair(
-                name=f"{model_id} - {would_be_id}",
-                request_json={"messages": [{"role": "user", "content": prompt}]},
+                name=f"{model_id} - {chapter_id}",
+                request_json={
+                    "messages": messages
+                },  # Include system prompt in request_json
                 response_json={"choices": [{"message": {"content": full_response}}]},
                 chapter_id=chapter_id,
             )
@@ -91,5 +87,5 @@ def generate_completion():
         return Response(stream_with_context(generate()), mimetype="text/event-stream")
 
     except Exception as e:
-        print(f"Error generating completion pair: {str(e)}")  # Debugging line
+        print(f"Error generating completion pair: {str(e)}")
         return jsonify({"error": str(e)}), 500
