@@ -4,7 +4,7 @@ Personal Project to make it easier to compare machine translation quality when t
 
 ## Demo
 
-[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/IRmymS2kFzM)
+[![Watch the demo](https://img.youtube.com/vi/IRmymS2kFzM/0.jpg)](https://youtu.be/IRmymS2kFzM)
 
 ## Requirements
 
