@@ -388,7 +388,13 @@ function App() {
                   // Handle the case where selectedCompletionPair is null
                   setSelectedCompletionPair({
                     request_json: {
-                      messages: [{ role: "user", content: e.target.value }],
+                      messages: [
+                        {
+                          role: "system",
+                          content: selectedChapter.system_prompt,
+                        },
+                        { role: "user", content: e.target.value },
+                      ],
                     },
                     response_json: { choices: [{ message: { content: "" } }] },
                   });
