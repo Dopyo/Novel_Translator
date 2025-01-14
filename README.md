@@ -1,6 +1,6 @@
 # Novel Translator
 
-Personal Project to make it easier to compare machine translation quality when translating novels. Do not serve over the internet if you expect someone else to use your credits for other purposes.
+Personal Project to make it easier to compare machine translation quality when translating novels. The goal is to visually assess improvements in translation quality as different enhancements are applied. Do not serve over the internet if you expect someone else to use your credits for other purposes.
 
 ## Demo
 
