@@ -81,10 +81,8 @@ function App() {
 
   const handleDeleteNovel = async (novelId) => {
     try {
-      // Call the backend API to delete the novel
       await axios.delete(`http://localhost:5000/api/novels/${novelId}`);
 
-      // Remove the deleted novel from the state
       setNovels((prevNovels) =>
         prevNovels.filter((novel) => novel.id !== novelId)
       );
@@ -106,7 +104,6 @@ function App() {
 
   const handleDeleteChapter = async (chapterId) => {
     try {
-      // Call the backend API to delete the chapter
       await axios.delete(`http://localhost:5000/api/chapters/${chapterId}`);
 
       // Remove the deleted chapter from the state
@@ -129,7 +126,6 @@ function App() {
 
   const handleDeleteCompletionPair = async (pairId) => {
     try {
-      // Call the backend API to delete the completion pair
       await axios.delete(
         `http://localhost:5000/api/completion-pairs/${pairId}`
       );
@@ -163,7 +159,7 @@ function App() {
       const response = await axios.post("http://localhost:5000/api/chapters/", {
         novel_id: novelId,
         chapter_number: chapters.length + 1,
-        system_prompt: systemPrompt, // Include the system prompt
+        system_prompt: systemPrompt,
       });
       return response.data;
     } catch (error) {
@@ -193,7 +189,6 @@ function App() {
         throw new Error("Network response was not ok");
       }
 
-      // Handle streaming response
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let fullResponse = "";
@@ -516,26 +511,20 @@ function App() {
           onClick={async () => {
             if (selectedChapter && selectedCompletionPair && selectedModel) {
               try {
-                // Get the system prompt from the selected chapter
                 const systemPrompt = selectedChapter.system_prompt;
-
-                // Create a new chapter with the same system prompt
                 const newChapter = await createNewChapter(
                   selectedNovel.id,
                   systemPrompt
                 );
 
-                // Generate a completion pair for the new chapter
                 await generateCompletionPair(
                   selectedCompletionPair.request_json.messages[0].content,
                   newChapter.id,
                   selectedModel.name
                 );
 
-                // Refresh the chapters list
                 await fetchChapters(selectedNovel.id);
 
-                // Set the new chapter as the selected chapter
                 setSelectedChapter(newChapter);
               } catch (error) {
                 console.error("Error creating next chapter:", error);
