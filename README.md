@@ -27,13 +27,15 @@ VITE_MODEL_2_API_KEY=your-key
 Run these commands to start the app
 
 ```
-cd ./frontend
-npm run build
-cd ../backend
+cd ./backend
 python -m venv venv
 On macOS/Linux: source venv/bin/activate
 On Windows: venv\Scripts\activate
 pip install -r requirements.txt
+cd ../frontend
+npm install
+npm run build
+cd ../backend
 flask run
 ```
 
