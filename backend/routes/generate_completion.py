@@ -12,7 +12,8 @@ models = get_models()
 @generate_completion_bp.route("/models", methods=["GET"])
 def get_models_route():
     try:
-        return jsonify(models), 200
+        model_names = [model["name"] for model in models]
+        return jsonify(model_names), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -56,7 +57,7 @@ def generate_completion():
         response = client.chat.completions.create(
             model=selected_model["name"],
             messages=messages,  # Use the updated messages array
-            max_tokens=16384,
+            max_tokens=8192,
             temperature=0.7,
             stream=True,
         )

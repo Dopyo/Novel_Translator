@@ -1,12 +1,11 @@
+import { useState } from "react";
 import axios from "axios";
-import Modal from "./Modal";
 
 const CreateNovelForm = ({ onClose, setNovels }) => {
+  const [name, setName] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = e.target.novelName.value;
-    if (!name) return alert("Name is required");
-
     try {
       const response = await axios.post("http://localhost:5000/api/novels/", {
         name,
@@ -19,24 +18,33 @@ const CreateNovelForm = ({ onClose, setNovels }) => {
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
-      <form onSubmit={handleSubmit}>
-        <h2 className="text-xl font-bold mb-4">Create Novel</h2>
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="text-xl font-bold mb-4">Novel Name</label>
         <input
           type="text"
-          name="novelName"
-          placeholder="Novel Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="w-full p-2 border rounded mb-4"
           required
         />
+      </div>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={onClose}
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Cancel
+        </button>
         <button
           type="submit"
-          className="w-full bg-teal-500 text-white p-2 rounded hover:bg-teal-600"
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
         >
           Create
         </button>
-      </form>
-    </Modal>
+      </div>
+    </form>
   );
 };
 

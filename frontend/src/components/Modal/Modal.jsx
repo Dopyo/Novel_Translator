@@ -2,18 +2,15 @@ const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-700 rounded-lg p-6 w-full max-w-md relative">
-        {" "}
-        {/* Added relative for positioning */}
-        {/* Close button */}
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg w-1/3">
+        {children}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-300 hover:text-gray-100 transition-colors"
+          className="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
         >
-          &times; {/* "X" icon */}
+          Close
         </button>
-        {children}
       </div>
     </div>
   );
