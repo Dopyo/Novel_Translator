@@ -30,6 +30,10 @@ Run these commands to start the app
 cd ./frontend
 npm run build
 cd ../backend
+python -m venv venv
+On macOS/Linux: source venv/bin/activate
+On Windows: venv\Scripts\activate
+pip install -r requirements.txt
 flask run
 ```
 
