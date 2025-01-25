@@ -13,7 +13,7 @@ import {
   fetchCompletionPairs,
   fetchModels,
 } from "../../utils/fetchData";
-
+import axios from "axios";
 function App() {
   const [novels, setNovels] = useState([]);
   const [selectedNovel, setSelectedNovel] = useState(null);
@@ -129,6 +129,31 @@ function App() {
     }
   };
 
+  const fetchChapters = async (novelId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/chapters/novel/${novelId}`
+      );
+      setChapters(response.data);
+    } catch (error) {
+      console.error("Error fetching chapters:", error);
+    }
+  };
+
+  const createNewChapter = async (novelId, systemPrompt = null) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/chapters/", {
+        novel_id: novelId,
+        chapter_number: chapters.length + 1,
+        system_prompt: systemPrompt, // Include the system prompt
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error creating new chapter:", error);
+      throw error;
+    }
+  };
+
   return (
     <div className="flex h-screen w-screen bg-gray-100 overflow-hidden">
       <NovelSidebar
@@ -178,6 +203,8 @@ function App() {
         isModelMenuOpen={isModelMenuOpen}
         setIsModelMenuOpen={setIsModelMenuOpen}
         generateCompletionPair={generateCompletionPair}
+        createNewChapter={createNewChapter}
+        fetchChapters={fetchChapters}
       />
       <NovelModal
         isOpen={isNovelModalOpen}

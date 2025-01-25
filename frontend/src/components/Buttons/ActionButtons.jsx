@@ -12,6 +12,8 @@ const ActionButtons = ({
   isModelMenuOpen,
   setIsModelMenuOpen,
   generateCompletionPair,
+  createNewChapter,
+  fetchChapters,
 }) => {
   const handleCreateCurrentChapter = () => {
     if (selectedChapter && selectedCompletionPair && selectedModel) {
